@@ -1,0 +1,11 @@
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\bin\Debug\sistema-caixa-pdv.exe.config
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\bin\Debug\sistema-caixa-pdv.exe
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\bin\Debug\sistema-caixa-pdv.pdb
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema-caixa-pdv.csproj.AssemblyReference.cache
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema_caixa_pdv.Properties.Resources.resources
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema-caixa-pdv.csproj.GenerateResource.cache
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema-caixa-pdv.csproj.CoreCompileInputs.cache
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema-caixa-pdv.exe
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema-caixa-pdv.pdb
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema_caixa_pdv.frmPrincipal.resources
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema_caixa_pdv.cadastro.frmFuncionario.resources
