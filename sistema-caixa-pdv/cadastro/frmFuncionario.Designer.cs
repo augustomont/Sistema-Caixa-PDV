@@ -45,6 +45,7 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
+            this.btnFoto = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgFoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -105,6 +106,7 @@
             // 
             // imgFoto
             // 
+            this.imgFoto.Image = global::sistema_caixa_pdv.Properties.Resources.pessoa;
             this.imgFoto.Location = new System.Drawing.Point(1102, 31);
             this.imgFoto.Name = "imgFoto";
             this.imgFoto.Size = new System.Drawing.Size(190, 167);
@@ -182,6 +184,7 @@
             this.btnSalvar.TabIndex = 14;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // btnEditar
             // 
@@ -201,11 +204,23 @@
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
             // 
+            // btnFoto
+            // 
+            this.btnFoto.AutoSize = true;
+            this.btnFoto.Location = new System.Drawing.Point(955, 168);
+            this.btnFoto.Name = "btnFoto";
+            this.btnFoto.Size = new System.Drawing.Size(141, 30);
+            this.btnFoto.TabIndex = 17;
+            this.btnFoto.Text = "Carregar imagem";
+            this.btnFoto.UseVisualStyleBackColor = true;
+            this.btnFoto.Click += new System.EventHandler(this.btnFoto_Click);
+            // 
             // frmFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1346, 673);
+            this.Controls.Add(this.btnFoto);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnSalvar);
@@ -252,5 +267,6 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnExcluir;
+        private System.Windows.Forms.Button btnFoto;
     }
 }

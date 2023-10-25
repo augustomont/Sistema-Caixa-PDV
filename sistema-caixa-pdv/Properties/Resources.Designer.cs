@@ -93,6 +93,16 @@ namespace sistema_caixa_pdv.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pessoa {
+            get {
+                object obj = ResourceManager.GetObject("pessoa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sacola {
             get {
                 object obj = ResourceManager.GetObject("sacola", resourceCulture);
