@@ -36,9 +36,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.imgFoto = new System.Windows.Forms.PictureBox();
             this.txtNome = new System.Windows.Forms.TextBox();
-            this.txtTelefone = new System.Windows.Forms.TextBox();
             this.txtEndereco = new System.Windows.Forms.TextBox();
-            this.txtCPF = new System.Windows.Forms.TextBox();
             this.cbCargo = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnNovo = new System.Windows.Forms.Button();
@@ -46,6 +44,8 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnFoto = new System.Windows.Forms.Button();
+            this.txtCPF = new System.Windows.Forms.MaskedTextBox();
+            this.txtTelefone = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.imgFoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -121,26 +121,12 @@
             this.txtNome.Size = new System.Drawing.Size(437, 26);
             this.txtNome.TabIndex = 7;
             // 
-            // txtTelefone
-            // 
-            this.txtTelefone.Location = new System.Drawing.Point(139, 84);
-            this.txtTelefone.Name = "txtTelefone";
-            this.txtTelefone.Size = new System.Drawing.Size(437, 26);
-            this.txtTelefone.TabIndex = 8;
-            // 
             // txtEndereco
             // 
             this.txtEndereco.Location = new System.Drawing.Point(139, 139);
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(437, 26);
             this.txtEndereco.TabIndex = 9;
-            // 
-            // txtCPF
-            // 
-            this.txtCPF.Location = new System.Drawing.Point(667, 28);
-            this.txtCPF.Name = "txtCPF";
-            this.txtCPF.Size = new System.Drawing.Size(338, 26);
-            this.txtCPF.TabIndex = 10;
             // 
             // cbCargo
             // 
@@ -159,12 +145,12 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(43, 227);
+            this.dataGridView1.Location = new System.Drawing.Point(43, 204);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(1249, 358);
+            this.dataGridView1.Size = new System.Drawing.Size(1249, 381);
             this.dataGridView1.TabIndex = 12;
             // 
             // btnNovo
@@ -215,11 +201,30 @@
             this.btnFoto.UseVisualStyleBackColor = true;
             this.btnFoto.Click += new System.EventHandler(this.btnFoto_Click);
             // 
+            // txtCPF
+            // 
+            this.txtCPF.Location = new System.Drawing.Point(691, 28);
+            this.txtCPF.Mask = "000.000,000-00";
+            this.txtCPF.Name = "txtCPF";
+            this.txtCPF.Size = new System.Drawing.Size(314, 26);
+            this.txtCPF.TabIndex = 18;
+            // 
+            // txtTelefone
+            // 
+            this.txtTelefone.Location = new System.Drawing.Point(139, 84);
+            this.txtTelefone.Mask = "(00) 00000-0000";
+            this.txtTelefone.Name = "txtTelefone";
+            this.txtTelefone.Size = new System.Drawing.Size(263, 26);
+            this.txtTelefone.TabIndex = 19;
+            // 
             // frmFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(1346, 673);
+            this.Controls.Add(this.txtTelefone);
+            this.Controls.Add(this.txtCPF);
             this.Controls.Add(this.btnFoto);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnEditar);
@@ -227,9 +232,7 @@
             this.Controls.Add(this.btnNovo);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.cbCargo);
-            this.Controls.Add(this.txtCPF);
             this.Controls.Add(this.txtEndereco);
-            this.Controls.Add(this.txtTelefone);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.imgFoto);
             this.Controls.Add(this.label6);
@@ -258,9 +261,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox imgFoto;
         private System.Windows.Forms.TextBox txtNome;
-        private System.Windows.Forms.TextBox txtTelefone;
         private System.Windows.Forms.TextBox txtEndereco;
-        private System.Windows.Forms.TextBox txtCPF;
         private System.Windows.Forms.ComboBox cbCargo;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnNovo;
@@ -268,5 +269,7 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnFoto;
+        private System.Windows.Forms.MaskedTextBox txtCPF;
+        private System.Windows.Forms.MaskedTextBox txtTelefone;
     }
 }
