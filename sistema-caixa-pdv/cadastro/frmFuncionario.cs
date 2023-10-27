@@ -23,6 +23,21 @@ namespace sistema_caixa_pdv.cadastro
         {
             InitializeComponent();
         }
+        private void frmFuncionario_Load(object sender, EventArgs e)
+        {
+            LimparFoto();
+            Listar();
+        }
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            HabilitarCampos();
+        }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+            LimparFoto();
+            DesabilitarCampos();
+        }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -48,7 +63,7 @@ namespace sistema_caixa_pdv.cadastro
                 return;
             }
 
-            conexao.abrirConexao();
+            conexao.AbrirConexao();
             sql = "INSERT INTO funcionarios(nome, cpf, telefone, endereco, cargo, data, foto)" +
                 "VALUES (@nome, @cpf, @telefone, @endereco, @cargo, curDate(), @foto)";
             
@@ -60,11 +75,15 @@ namespace sistema_caixa_pdv.cadastro
             cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cargo", cbCargo.Text);
-            cmd.Parameters.AddWithValue("@foto", img());//img é um metodo criado por mim para tratar imagem para o banco de dados
+            cmd.Parameters.AddWithValue("@foto", Img());//img é um metodo criado por mim para tratar imagem para o banco de dados
 
             cmd.ExecuteNonQuery();
             
-            conexao.fecharConexao();
+            conexao.FecharConexao();
+
+            LimparFoto();
+            LimparCampos();
+            DesabilitarCampos();
 
         }
 
@@ -82,7 +101,7 @@ namespace sistema_caixa_pdv.cadastro
             }
         }
 
-        private byte[] img() //este metodo é padrao, serve sempre que deseja enviar uma imagem para banco de dados
+        private byte[] Img() //este metodo é padrao, serve sempre que deseja enviar uma imagem para banco de dados
         {
             byte[] imagem_bytes = null; //serve para eniar o comprimento da imagem
             if (string.IsNullOrEmpty(foto))//a string foto nunca deverá estar vazia, pq no metodo LimparFoto() foi passsado o caminho de uma imagem padrao (pessoa)
@@ -90,19 +109,10 @@ namespace sistema_caixa_pdv.cadastro
                 return null;
             }
 
-            /*    //usar o FileStream para enviar imagem para o BD e 3 parametros "local(foto), tipo de imagem(FileMode), tipo de acesso(FileAcess)"
-                FileStream fs = new FileStream(foto, FileMode.Open, FileAccess.Read);//isso é padrão
-
-                BinaryReader br = new BinaryReader(fs); //serve para trabalhar com o FileStream
-
-                imagem_bytes = br.ReadBytes((int)fs.Length); //pega o comprimento de FileStream jogando dentro de uma tipo IMAGEM BYTE
-
-                return imagem_bytes;
-            */
-
-            using (FileStream fs = new FileStream(foto, FileMode.Open, FileAccess.Read))
-            using (BinaryReader br = new BinaryReader(fs))
-            imagem_bytes = br.ReadBytes((int)fs.Length);
+            //usar o FileStream para enviar imagem para o BD e 3 parametros "local(foto), tipo de imagem(FileMode), tipo de acesso(FileAcess)"
+            using (FileStream fs = new FileStream(foto, FileMode.Open, FileAccess.Read))//isso é padrão
+            using (BinaryReader br = new BinaryReader(fs))//serve para trabalhar com o FileStream
+                imagem_bytes = br.ReadBytes((int)fs.Length);//pega o comprimento de FileStream jogando dentro de uma tipo IMAGEM BYTE
             {
                 return imagem_bytes;
             }
@@ -111,6 +121,52 @@ namespace sistema_caixa_pdv.cadastro
         {
             imgFoto.Image = Properties.Resources.pessoa;// aqui coloca a imagem pessoa.png na picture do form
             foto = "img/pessoa.png"; //atribuindo um caminho de foto (esssa imagem te que estar na pasta debug)
+        }
+        private void LimparCampos()
+        {
+            txtNome.Clear();
+            txtCPF.Clear();
+            txtEndereco.Clear();
+            txtTelefone.Clear();
+            cbCargo.ResetText();//metodo Clear() não limpa os campos de uma comboBox
+        }
+        private void HabilitarCampos()
+        {
+            txtNome.Enabled = true;
+            txtCPF.Enabled = true;
+            txtEndereco.Enabled = true;
+            txtTelefone.Enabled = true;
+            cbCargo.Enabled = true;
+            btnSalvar.Enabled = true;
+            btnFoto.Enabled = true;
+
+            btnNovo.Enabled = false;
+        }
+        private void DesabilitarCampos()
+        {
+            txtNome.Enabled = false;
+            txtCPF.Enabled = false;
+            txtEndereco.Enabled = false;
+            txtTelefone.Enabled = false;
+            cbCargo.Enabled = false;
+            btnSalvar.Enabled = false;
+            btnFoto.Enabled = false;
+            
+            btnNovo.Enabled = true;
+        }
+        private void Listar()
+        {
+            conexao.AbrirConexao();
+
+            grid.Rows.Clear();//limpar o grid antes de preencheer
+            sql = "SELECT * FROM funcionarios ORDER BY nome asc;";
+            cmd = new MySqlCommand(sql, conexao.conexao);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);//Adapter serve para adaptar os dados do BD pra caber no grid. cmd serve para buscar esses dados
+            DataTable dt = new DataTable(); //cria uma tabela de dados
+            da.Fill(dt); //preenche a tabela com os dados adaptados no MySqlDataAdapter
+            grid.DataSource = dt;//preenche o grid com todos os dados da tabela, no formato certo para o grid
+
+            conexao.FecharConexao();
         }
     }
 }

@@ -12,12 +12,12 @@ namespace sistema_caixa_pdv
         public MySqlConnection conexao = null;
         public string data_source = "datasource=localhost;username=root;password=1234;database=pdv";
 
-        public void abrirConexao()
+        public void AbrirConexao()
         {
             conexao = new MySqlConnection(data_source);
             conexao.Open();
         }
-        public void fecharConexao()
+        public void FecharConexao()
         {
             conexao= new MySqlConnection(data_source);
             conexao.Close();
