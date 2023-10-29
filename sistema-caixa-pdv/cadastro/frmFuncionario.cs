@@ -26,17 +26,57 @@ namespace sistema_caixa_pdv.cadastro
         private void frmFuncionario_Load(object sender, EventArgs e)
         {
             LimparFoto();
+            grid.Rows.Clear();//limpar o grid antes de preencheer
             Listar();
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
+            LimparCampos();
+            LimparFoto();
             HabilitarCampos();
+            txtNome.Focus();
+        }
+        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                HabilitarEdicao();
+                PreencherCampos();
+
+                //preencher foto separadamente
+                if (grid.CurrentRow.Cells[7].Value != DBNull.Value) //Verific se tem foto salva
+                {
+                    byte[] imagem = (byte[])grid.Rows[e.RowIndex].Cells[7].Value; //Criar array bytes[] imagem para receber a foto da tabela em bytes
+                    MemoryStream ms = new MemoryStream(imagem); //recebe o array byte[] ja com o valor convertido da foto
+                    imgFoto.Image = Image.FromStream(ms); //passando o memoryStream no objeto que ele recebe um System.Drawing e seu parameter FromStream que vai receber
+                }
+                else
+                {
+                    imgFoto.Image = Properties.Resources.pessoa; //aqui insere a foto padrãodo sistema
+                }
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        private void grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                HabilitarCampos();
+                PreencherCampos();
+                HabilitarEdicao();
+                
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             LimparCampos();
             LimparFoto();
             DesabilitarCampos();
+            HabilitarNovo();
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -84,6 +124,7 @@ namespace sistema_caixa_pdv.cadastro
             LimparFoto();
             LimparCampos();
             DesabilitarCampos();
+            Listar();
 
         }
 
@@ -137,9 +178,9 @@ namespace sistema_caixa_pdv.cadastro
             txtEndereco.Enabled = true;
             txtTelefone.Enabled = true;
             cbCargo.Enabled = true;
-            btnSalvar.Enabled = true;
             btnFoto.Enabled = true;
 
+            btnSalvar.Enabled = true;
             btnNovo.Enabled = false;
         }
         private void DesabilitarCampos()
@@ -149,16 +190,28 @@ namespace sistema_caixa_pdv.cadastro
             txtEndereco.Enabled = false;
             txtTelefone.Enabled = false;
             cbCargo.Enabled = false;
-            btnSalvar.Enabled = false;
             btnFoto.Enabled = false;
-            
+
+            HabilitarNovo();
+        }
+        private void HabilitarNovo()
+        {
             btnNovo.Enabled = true;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
+        }
+        private void HabilitarEdicao()
+        {
+            btnNovo.Enabled = false;
+            btnSalvar.Enabled=false;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
         }
         private void Listar()
         {
             conexao.AbrirConexao();
 
-            grid.Rows.Clear();//limpar o grid antes de preencheer
             sql = "SELECT * FROM funcionarios ORDER BY nome asc;";
             cmd = new MySqlCommand(sql, conexao.conexao);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);//Adapter serve para adaptar os dados do BD pra caber no grid. cmd serve para buscar esses dados
@@ -166,7 +219,29 @@ namespace sistema_caixa_pdv.cadastro
             da.Fill(dt); //preenche a tabela com os dados adaptados no MySqlDataAdapter
             grid.DataSource = dt;//preenche o grid com todos os dados da tabela, no formato certo para o grid
 
+            FormatarGrid();
+
             conexao.FecharConexao();
         }
+        private void PreencherCampos()
+        {
+            txtNome.Text = grid.CurrentRow.Cells[1].Value.ToString();
+            txtCPF.Text = grid.CurrentRow.Cells[2].Value.ToString();
+            txtTelefone.Text = grid.CurrentRow.Cells[3].Value.ToString();
+            txtEndereco.Text = grid.CurrentRow.Cells[4].Value.ToString();
+            cbCargo.Text = grid.CurrentRow.Cells[5].Value.ToString();
+            
+        }
+        private void FormatarGrid()
+        {
+            grid.Columns[0].HeaderText = "ID";
+            grid.Columns[1].HeaderText = "Colaborador";
+            grid.Columns[2].HeaderText = "CPF";
+            grid.Columns[3].HeaderText = "Telefone";
+            grid.Columns[4].HeaderText = "Endereço";
+            grid.Columns[5].HeaderText = "Função";
+            grid.Columns[6].HeaderText = "Data de Inserção";
+        }
+
     }
 }

@@ -122,7 +122,7 @@
             this.txtNome.Location = new System.Drawing.Point(139, 28);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(437, 26);
-            this.txtNome.TabIndex = 7;
+            this.txtNome.TabIndex = 1;
             // 
             // txtEndereco
             // 
@@ -130,7 +130,7 @@
             this.txtEndereco.Location = new System.Drawing.Point(139, 139);
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(437, 26);
-            this.txtEndereco.TabIndex = 9;
+            this.txtEndereco.TabIndex = 5;
             // 
             // cbCargo
             // 
@@ -143,7 +143,7 @@
             this.cbCargo.Location = new System.Drawing.Point(691, 84);
             this.cbCargo.Name = "cbCargo";
             this.cbCargo.Size = new System.Drawing.Size(314, 28);
-            this.cbCargo.TabIndex = 11;
+            this.cbCargo.TabIndex = 4;
             // 
             // grid
             // 
@@ -155,8 +155,11 @@
             this.grid.ReadOnly = true;
             this.grid.RowHeadersWidth = 62;
             this.grid.RowTemplate.Height = 28;
+            this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.grid.Size = new System.Drawing.Size(1249, 381);
             this.grid.TabIndex = 12;
+            this.grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellClick);
+            this.grid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellDoubleClick);
             // 
             // btnNovo
             // 
@@ -174,7 +177,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(202, 591);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(130, 44);
-            this.btnSalvar.TabIndex = 14;
+            this.btnSalvar.TabIndex = 7;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -206,7 +209,7 @@
             this.btnFoto.Location = new System.Drawing.Point(955, 168);
             this.btnFoto.Name = "btnFoto";
             this.btnFoto.Size = new System.Drawing.Size(141, 30);
-            this.btnFoto.TabIndex = 17;
+            this.btnFoto.TabIndex = 6;
             this.btnFoto.Text = "Carregar imagem";
             this.btnFoto.UseVisualStyleBackColor = true;
             this.btnFoto.Click += new System.EventHandler(this.btnFoto_Click);
@@ -218,7 +221,7 @@
             this.txtCPF.Mask = "000.000,000-00";
             this.txtCPF.Name = "txtCPF";
             this.txtCPF.Size = new System.Drawing.Size(314, 26);
-            this.txtCPF.TabIndex = 18;
+            this.txtCPF.TabIndex = 2;
             // 
             // txtTelefone
             // 
@@ -227,14 +230,14 @@
             this.txtTelefone.Mask = "(00) 00000-0000";
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(263, 26);
-            this.txtTelefone.TabIndex = 19;
+            this.txtTelefone.TabIndex = 3;
             // 
             // btnCancelar
             // 
             this.btnCancelar.Location = new System.Drawing.Point(1162, 591);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(130, 44);
-            this.btnCancelar.TabIndex = 21;
+            this.btnCancelar.TabIndex = 8;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
