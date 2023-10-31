@@ -34,6 +34,7 @@ namespace sistema_caixa_pdv.cadastro
             LimparFoto();
             grid.Rows.Clear();//limpar o grid antes de preencheer
             fotoAlterada = false;
+            ListarCargos();
             Listar();
         }
         private void btnNovo_Click(object sender, EventArgs e)
@@ -112,6 +113,26 @@ namespace sistema_caixa_pdv.cadastro
 
                 MessageBox.Show("Registro Editado com sucesso!", "Cadastro Funcionarios", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Resetar();
+            }
+        }
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("Tem certeza que deseja excluir?\n" +
+                "\nNão é possivel reverter essa ação!", "Cadastro Funcionários", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.OK)
+            {
+                string nomeExcluido = (txtNome.Text).ToString();//Guarda o nome que será excluido, antes de apagar do BD
+                conexao.AbrirConexao();
+                cmd = new MySqlCommand("DELETE FROM funcionarios WHERE id = @id", conexao.conexao);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                conexao.FecharConexao();
+                Resetar();
+                MessageBox.Show($"**{nomeExcluido}** excluido do cadastro de funcionários!");
+            }
+            else
+            {
+                return;
             }
         }
 
@@ -228,6 +249,18 @@ namespace sistema_caixa_pdv.cadastro
 
             conexao.FecharConexao();
         }
+        private void ListarCargos()
+        {
+            conexao.AbrirConexao();
+            sql = "SELECT cargo FROM cargos;";
+            cmd = new MySqlCommand(sql, conexao.conexao);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            cbCargo.DataSource = dt;
+            cbCargo.DisplayMember = "cargo";
+            conexao.FecharConexao();
+        }
         private void PreencherCampos()
         {
             id = grid.CurrentRow.Cells[0].Value.ToString();
@@ -331,5 +364,6 @@ namespace sistema_caixa_pdv.cadastro
             fotoAlterada = false;
             grid.Enabled = true;
         }
+
     }
 }
