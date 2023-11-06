@@ -41,3 +41,4 @@ C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\bin\Debu
 C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema-caixa-pdv.csproj.CopyComplete
+C:\Users\cliente\Desktop\Programação\sistemas\pdv-2\sistema-caixa-pdv\obj\Debug\sistema_caixa_pdv.cadastro.frmCargos.resources

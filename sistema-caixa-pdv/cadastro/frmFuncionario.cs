@@ -45,35 +45,6 @@ namespace sistema_caixa_pdv.cadastro
             grid.Enabled = false;
 
         }
-        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                HabilitarEdicao();
-                PreencherCampos();
-                PreencherFoto(e);//recebe argumento para verificar se o campo esta vazio
-            }
-            else
-            {
-                return;
-            }
-
-        }
-        private void grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                PreencherCampos();
-                HabilitarCampos();
-                HabilitarEdicao();
-                
-                grid.Enabled = false;
-            }
-        }
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            Resetar();
-        }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -133,6 +104,35 @@ namespace sistema_caixa_pdv.cadastro
             else
             {
                 return;
+            }
+        }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Resetar();
+        }
+        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                HabilitarEdicao();
+                PreencherCampos();
+                PreencherFoto(e);//recebe argumento para verificar se o campo esta vazio
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        private void grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                PreencherCampos();
+                HabilitarCampos();
+                HabilitarEdicao();
+                
+                grid.Enabled = false;
             }
         }
 
@@ -252,13 +252,13 @@ namespace sistema_caixa_pdv.cadastro
         private void ListarCargos()
         {
             conexao.AbrirConexao();
-            sql = "SELECT cargo FROM cargos;";
+            sql = "SELECT cargo FROM cargos;";//Seleciona apenas a coluna com os dados dos cargos
             cmd = new MySqlCommand(sql, conexao.conexao);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
             cbCargo.DataSource = dt;
-            cbCargo.DisplayMember = "cargo";
+            cbCargo.DisplayMember = "cargo";//Nome da coluna do banco de dados que será mostrada
             conexao.FecharConexao();
         }
         private void PreencherCampos()
