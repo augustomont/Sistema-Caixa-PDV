@@ -112,7 +112,7 @@ namespace sistema_caixa_pdv.cadastro
         }
         private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1)
+            if (e.RowIndex > -1)//verifica se a linha exite. Isso corrige o erro de clicar em espaço vazio da grid.
             {
                 HabilitarEdicao();
                 PreencherCampos();

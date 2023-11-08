@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace sistema_caixa_pdv.cadastro
-{    
+{
     public partial class frmCargos : Form
     {
         Conexao conexao = new Conexao();
         string sql;
         MySqlCommand cmd;
+        bool ativo = true;
+        string id;
         public frmCargos()
         {
             InitializeComponent();
@@ -23,34 +25,86 @@ namespace sistema_caixa_pdv.cadastro
 
         private void frmCargos_Load(object sender, EventArgs e)
         {
+            HabilitarBotaoNovo();
             Listar();
         }
 
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            HabilitarEdicao();
-            txtCargo.Enabled = true;
+            txtCargo.Clear();
+            HabilitarSalvar();
+            HabilitarCampos(ativo);
+
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            conexao.AbrirConexao();
-            sql = "INSERT INTO cargos(cargo) VALUES (@cargo);";
-            cmd = new MySqlCommand(sql, conexao.conexao);
+            if (string.IsNullOrEmpty(txtCargo.Text.Trim()))
+            {
+                MessageBox.Show("Preencha o Cargo!", "Cadastro Cargo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCargo.Clear();
+                txtCargo.Focus();
+                return;
+            }
+            else
+            {
+                conexao.AbrirConexao();
+                sql = "INSERT INTO cargos(cargo) VALUES (@cargo);";
+                cmd = new MySqlCommand(sql, conexao.conexao);
+                cmd.Parameters.AddWithValue("@cargo", txtCargo.Text);
 
-            
-            conexao.FecharConexao();
+                cmd.ExecuteNonQuery();
+                conexao.FecharConexao();
+                MessageBox.Show("Novo Cargo Salvo!", "Cadastro Cargo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                Resetar();
+            }
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtCargo.Text.Trim()))
+            {
+                MessageBox.Show("Preencha o Cargos!", "Cadastro Cargo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCargo.Focus();
+                return;
+            }
+            else
+            {
+                conexao.AbrirConexao();
+                sql = "UPDATE cargos SET cargo = @cargo WHERE id = @id;";
+                cmd = new MySqlCommand(sql, conexao.conexao);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@cargo", txtCargo.Text);
+                cmd.ExecuteNonQuery();
+                conexao.FecharConexao();
 
+                MessageBox.Show("Cargo Atualizado!", "Cadastro Cargo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Resetar();
+            }
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-
+            DialogResult res = MessageBox.Show("Certeza que deseja excluir esse cargo?\n\n" +
+                "Essa ação não pode ser revertida!", "Cadastro Cargo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.OK)
+            {
+                string cargoExcluido = (txtCargo.Text).ToString();
+                conexao.AbrirConexao();
+                cmd = new MySqlCommand("DELETE FROM cargos WHERE id = @id;", conexao.conexao);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                conexao.FecharConexao();
+                
+                MessageBox.Show($"**{cargoExcluido}** excluido do cadastro de cargos!");
+                Resetar();
+            }
+            else
+            {
+                return;
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -70,34 +124,81 @@ namespace sistema_caixa_pdv.cadastro
         }
         private void Resetar()
         {
-            txtCargo.Clear();
             HabilitarBotaoNovo();
             Listar();
         }
 
-        private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0)
+            {
+                PreencherCampos();
+                txtCargo.Enabled = false;
+                HabilitarEdicao();
+            }
+            else
+            {
+                return;
+            }
+        }
+        private void grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                PreencherCampos();
+                grid.Enabled = false;
+                HabilitarEdicao();
+                HabilitarCampos(ativo);
 
+            }
+            else
+            {
+                return;
+            }
         }
         private void HabilitarBotaoNovo()
         {
             txtCargo.Clear();
             grid.Enabled = true;
-            txtCargo.Enabled = false;
+            HabilitarCampos(!ativo);
             btnNovo.Enabled = true;
             btnSalvar.Enabled = false;
             btnEditar.Enabled = false;
             btnExcluir.Enabled = false;
         }
+        private void HabilitarSalvar()
+        {
+            grid.Enabled = false;
+            btnNovo.Enabled= false;
+            btnSalvar.Enabled= true;
+            btnEditar.Enabled= false;
+            btnExcluir.Enabled= false;
+        }
         private void HabilitarEdicao()
         {
-            btnNovo.Enabled=false;
-            btnSalvar.Enabled=true;
-            btnEditar.Enabled=true;
-            btnExcluir.Enabled=true;
+            btnNovo.Enabled = false;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
 
-            grid.Enabled = false;
+            
         }
-        
+        private void HabilitarCampos(bool ativo)
+        {
+           if (ativo)
+            {
+                txtCargo.Enabled = true;
+                txtCargo.Focus();
+            }
+           else
+            {
+                txtCargo.Enabled = false;
+            }
+        }
+        private void PreencherCampos()
+        {
+            id = grid.CurrentRow.Cells[0].Value.ToString();
+            txtCargo.Text = grid.CurrentRow.Cells[1].Value.ToString();
+        }
     }
 }

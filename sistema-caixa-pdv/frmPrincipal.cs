@@ -19,7 +19,11 @@ namespace sistema_caixa_pdv
 
         private void menuSair_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult res = MessageBox.Show("Certeza que deseja sair?", "Sistema de Caixa", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.OK)
+            {
+                this.Close();
+            }
         }
 
         private void menuCadastroFuncionario_Click(object sender, EventArgs e)
