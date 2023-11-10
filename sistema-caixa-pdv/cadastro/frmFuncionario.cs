@@ -61,6 +61,7 @@ namespace sistema_caixa_pdv.cadastro
                 AdicionarValoresSql();//adiciona nome, cpf, telefone, endereco, cargo
                 cmd.Parameters.AddWithValue("@foto", Img());//img é um metodo para tratar imagem para o banco de dados. Imagem precisa estar em formato de Array de Bytes
 
+                VerificarCpfExiste();
                 cmd.ExecuteNonQuery();
             
                 conexao.FecharConexao();
@@ -266,7 +267,7 @@ namespace sistema_caixa_pdv.cadastro
             id = grid.CurrentRow.Cells[0].Value.ToString();
             txtNome.Text = grid.CurrentRow.Cells[1].Value.ToString();
             txtCPF.Text = grid.CurrentRow.Cells[2].Value.ToString();
-            cpfAntigo = grid.CurrentRow.Cells[2].Value.ToString();//importante para posterior verificacao
+            cpfAntigo = grid.CurrentRow.Cells[2].Value.ToString();//importante para posterior verificacao de CPF existente!!!!
             txtTelefone.Text = grid.CurrentRow.Cells[3].Value.ToString();
             txtEndereco.Text = grid.CurrentRow.Cells[4].Value.ToString();
             cbCargo.Text = grid.CurrentRow.Cells[5].Value.ToString();

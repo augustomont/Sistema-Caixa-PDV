@@ -18,6 +18,7 @@ namespace sistema_caixa_pdv.cadastro
         MySqlCommand cmd;
         bool ativo = true;
         string id;
+        string cargoAntigo;
         public frmCargos()
         {
             InitializeComponent();
@@ -54,6 +55,8 @@ namespace sistema_caixa_pdv.cadastro
                 cmd = new MySqlCommand(sql, conexao.conexao);
                 cmd.Parameters.AddWithValue("@cargo", txtCargo.Text);
 
+                VerificarCargoExistente();
+
                 cmd.ExecuteNonQuery();
                 conexao.FecharConexao();
                 MessageBox.Show("Novo Cargo Salvo!", "Cadastro Cargo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -77,6 +80,9 @@ namespace sistema_caixa_pdv.cadastro
                 cmd = new MySqlCommand(sql, conexao.conexao);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@cargo", txtCargo.Text);
+
+                VerificarCargoExistente();
+
                 cmd.ExecuteNonQuery();
                 conexao.FecharConexao();
 
@@ -119,6 +125,8 @@ namespace sistema_caixa_pdv.cadastro
             DataTable dt = new DataTable();
             da.Fill(dt);
             grid.DataSource = dt;
+
+            grid.Columns[1].HeaderText = "Cargos";//Mudar o original que seria cargo para Cargos. Apenas por estetica.
 
             conexao.FecharConexao();
         }
@@ -199,6 +207,26 @@ namespace sistema_caixa_pdv.cadastro
         {
             id = grid.CurrentRow.Cells[0].Value.ToString();
             txtCargo.Text = grid.CurrentRow.Cells[1].Value.ToString();
+            cargoAntigo = grid.CurrentRow.Cells[1].Value.ToString();
+        }
+        private void VerificarCargoExistente()
+        {
+            if (txtCargo.Text != cargoAntigo)
+            {
+                sql = "SELECT * FROM cargos WHERE cargo = @cargo";
+                MySqlCommand cmdVerificar = new MySqlCommand(sql, conexao.conexao);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdVerificar);
+                cmdVerificar.Parameters.AddWithValue("@cargo", txtCargo.Text);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    MessageBox.Show("Cargo ja registrado!", "Cadastro Cargos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    txtCargo.Clear();
+                    txtCargo.Focus();
+                    return;
+                }                
+            }
         }
     }
 }
