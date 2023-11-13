@@ -81,7 +81,10 @@ namespace sistema_caixa_pdv.cadastro
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@cargo", txtCargo.Text);
 
-                VerificarCargoExistente();
+                if (VerificarCargoExistente())
+                {
+                    return;
+                }
 
                 cmd.ExecuteNonQuery();
                 conexao.FecharConexao();
@@ -209,7 +212,7 @@ namespace sistema_caixa_pdv.cadastro
             txtCargo.Text = grid.CurrentRow.Cells[1].Value.ToString();
             cargoAntigo = grid.CurrentRow.Cells[1].Value.ToString();
         }
-        private void VerificarCargoExistente()
+        private bool VerificarCargoExistente()
         {
             if (txtCargo.Text != cargoAntigo)
             {
@@ -222,10 +225,18 @@ namespace sistema_caixa_pdv.cadastro
                 if (dt.Rows.Count > 0)
                 {
                     MessageBox.Show("Cargo ja registrado!", "Cadastro Cargos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    txtCargo.Clear();
                     txtCargo.Focus();
-                    return;
-                }                
+                    conexao.FecharConexao();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
     }

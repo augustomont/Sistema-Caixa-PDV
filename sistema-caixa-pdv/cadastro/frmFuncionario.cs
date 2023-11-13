@@ -61,7 +61,10 @@ namespace sistema_caixa_pdv.cadastro
                 AdicionarValoresSql();//adiciona nome, cpf, telefone, endereco, cargo
                 cmd.Parameters.AddWithValue("@foto", Img());//img é um metodo para tratar imagem para o banco de dados. Imagem precisa estar em formato de Array de Bytes
 
-                VerificarCpfExiste();
+                if (VerificarCpfExiste())
+                {
+                    return;
+                }
                 cmd.ExecuteNonQuery();
             
                 conexao.FecharConexao();
@@ -77,7 +80,11 @@ namespace sistema_caixa_pdv.cadastro
                 conexao.AbrirConexao();
 
                 VerificarImagemAlteradaESalvar();//Salva alteriacoes feitas
-                VerificarCpfExiste();
+                
+                if (VerificarCpfExiste())
+                {
+                    return;
+                }
 
                 cmd.ExecuteNonQuery();
                 conexao.FecharConexao();
@@ -328,7 +335,7 @@ namespace sistema_caixa_pdv.cadastro
                 AdicionarValoresSql();
             }
         }
-        private void VerificarCpfExiste()
+        private bool VerificarCpfExiste()
         {
             if (txtCPF.Text != cpfAntigo)//Verifica se CPF é igual ao que aparece no formulario
             {
@@ -341,8 +348,16 @@ namespace sistema_caixa_pdv.cadastro
                 {
                     MessageBox.Show("CPF ja registrado!", "Cadastro Funcionários", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     txtCPF.Focus();
-                    return;
+                    return true;
                 }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
         private void AdicionarValoresSql()
