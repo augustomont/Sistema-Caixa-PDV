@@ -96,7 +96,7 @@ namespace sistema_caixa_pdv.cadastro
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            DialogResult res = MessageBox.Show("Certeza que deseja excluir esse cargo?\n\n" +
+            DialogResult res = MessageBox.Show($"Certeza que deseja excluir o cargo ({txtCargo.Text})?\n\n" +
                 "Essa ação não pode ser revertida!", "Cadastro Cargo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (res == DialogResult.OK)
             {
@@ -216,6 +216,7 @@ namespace sistema_caixa_pdv.cadastro
         {
             if (txtCargo.Text != cargoAntigo)
             {
+               
                 sql = "SELECT * FROM cargos WHERE cargo = @cargo";
                 MySqlCommand cmdVerificar = new MySqlCommand(sql, conexao.conexao);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdVerificar);
@@ -224,7 +225,7 @@ namespace sistema_caixa_pdv.cadastro
                 da.Fill(dt);
                 if (dt.Rows.Count > 0)
                 {
-                    MessageBox.Show("Cargo ja registrado!", "Cadastro Cargos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show($"Cargo ({txtCargo.Text}) ja registrado!", "Cadastro Cargos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     txtCargo.Focus();
                     conexao.FecharConexao();
                     return true;
