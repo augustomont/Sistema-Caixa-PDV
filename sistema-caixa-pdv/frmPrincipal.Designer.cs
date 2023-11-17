@@ -31,7 +31,7 @@
             this.menuPrincipal = new System.Windows.Forms.MenuStrip();
             this.menuCadastro = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCadastroFuncionario = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCadastroCliente = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCadastroClientes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCadastroUsuarios = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCadastroCargos = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCadastroFornecedores = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,7 +82,7 @@
             // 
             this.menuCadastro.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuCadastroFuncionario,
-            this.menuCadastroCliente,
+            this.menuCadastroClientes,
             this.menuCadastroUsuarios,
             this.menuCadastroCargos,
             this.menuCadastroFornecedores});
@@ -97,11 +97,12 @@
             this.menuCadastroFuncionario.Text = "Funcionários";
             this.menuCadastroFuncionario.Click += new System.EventHandler(this.menuCadastroFuncionario_Click);
             // 
-            // menuCadastroCliente
+            // menuCadastroClientes
             // 
-            this.menuCadastroCliente.Name = "menuCadastroCliente";
-            this.menuCadastroCliente.Size = new System.Drawing.Size(270, 34);
-            this.menuCadastroCliente.Text = "Clientes";
+            this.menuCadastroClientes.Name = "menuCadastroClientes";
+            this.menuCadastroClientes.Size = new System.Drawing.Size(270, 34);
+            this.menuCadastroClientes.Text = "Clientes";
+            this.menuCadastroClientes.Click += new System.EventHandler(this.menuCadastroClientes_Click);
             // 
             // menuCadastroUsuarios
             // 
@@ -305,7 +306,7 @@
         private System.Windows.Forms.PictureBox img04;
         private System.Windows.Forms.PictureBox img03;
         private System.Windows.Forms.ToolStripMenuItem menuCadastroFuncionario;
-        private System.Windows.Forms.ToolStripMenuItem menuCadastroCliente;
+        private System.Windows.Forms.ToolStripMenuItem menuCadastroClientes;
         private System.Windows.Forms.ToolStripMenuItem menuCadastroUsuarios;
         private System.Windows.Forms.ToolStripMenuItem menuCadastroCargos;
         private System.Windows.Forms.ToolStripMenuItem menuCadastroFornecedores;

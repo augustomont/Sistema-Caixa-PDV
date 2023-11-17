@@ -75,23 +75,29 @@ namespace sistema_caixa_pdv.cadastro
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if(VerificarCamposObrigatorios())
+            string nomeExcluido = (txtNome.Text).ToString();//Guarda o nome que será excluido, antes de apagar do BD
+            DialogResult res = MessageBox.Show($"Tem certeza que deseja editar {nomeExcluido}?\n" +
+               "\nNão é possivel reverter essa ação!", "Cadastro Funcionários", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.OK)
             {
-                conexao.AbrirConexao();
-
-                VerificarImagemAlteradaESalvar();//Salva alteriacoes feitas
-                
-                if (VerificarCpfExiste())
+                if (VerificarCamposObrigatorios())
                 {
-                    return;
+                    conexao.AbrirConexao();
+
+                    VerificarImagemAlteradaESalvar();//Salva alteriacoes feitas
+
+                    if (VerificarCpfExiste())
+                    {
+                        return;
+                    }
+
+                    cmd.ExecuteNonQuery();
+                    conexao.FecharConexao();
+                    Listar();
+
+                    MessageBox.Show("Registro Editado com sucesso!", "Cadastro Funcioñários", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Resetar();
                 }
-
-                cmd.ExecuteNonQuery();
-                conexao.FecharConexao();
-                Listar();
-
-                MessageBox.Show("Registro Editado com sucesso!", "Cadastro Funcionarios", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Resetar();
             }
         }
         private void btnExcluir_Click(object sender, EventArgs e)

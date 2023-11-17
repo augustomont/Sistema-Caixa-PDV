@@ -37,5 +37,11 @@ namespace sistema_caixa_pdv
             cadastro.frmCargos frm = new cadastro.frmCargos();
             frm.ShowDialog();
         }
+
+        private void menuCadastroClientes_Click(object sender, EventArgs e)
+        {
+            cadastro.frmClientes frm = new cadastro.frmClientes();
+            frm.ShowDialog();
+        }
     }
 }
